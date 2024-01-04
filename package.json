@@ -1,0 +1,49 @@
+{
+  "name": "@grace-studio/openapi-docs",
+  "version": "0.1.0",
+  "description": "",
+  "type": "module",
+  "exports": "./lib/index.js",
+  "bin": {
+    "openapi-docs": "./bin/index.js"
+  },
+  "files": [
+    "bin/**/*",
+    "lib/**/*"
+  ],
+  "scripts": {
+    "lint": "eslint",
+    "clean": "rm -rf ./lib",
+    "build": "npm run clean && tsc",
+    "dev": "npm run build && node ./bin/index.js -f ./testfiles/test.json ./testfiles/test2.json ./testfiles/test3.yml",
+    "prepack": "npm run build",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grace-studio/openapi-docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/grace-studio/openapi-docs/issues"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "4.1.2",
+    "commander": "11.1.0",
+    "deepmerge": "4.3.1",
+    "yaml": "2.3.4"
+  },
+  "devDependencies": {
+    "@types/node": "20.8.10",
+    "eslint": "8.52.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-plugin-import": "2.29.0",
+    "eslint-plugin-prettier": "5.0.1",
+    "prettier": "3.0.3",
+    "prettier-eslint": "16.1.2",
+    "typescript": "5.2.2"
+  },
+  "node": ">=18"
+}

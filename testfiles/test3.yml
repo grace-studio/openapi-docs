@@ -1,0 +1,8 @@
+info:
+  l2: |
+    # Heading
+    Multiline text
+
+    # Next §
+    Something else
+  title: Test title

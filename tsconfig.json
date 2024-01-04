@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "declaration": true,
+    "outDir": "lib",
+    "strict": true,
+    "target": "ES2021",
+    "module": "node16",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node16"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

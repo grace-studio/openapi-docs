@@ -14,18 +14,18 @@ yarn global add @grace-studio/openapi-docs
 
 ## Usage
 
-**Merge multiple JSON files:**
+Combines multiple JSON or YAML files to one OpenAPI file used for documentation. Outputs the files to `/docs` including the OpenAPI file and an html-file with a standalone reference to Redoc that can be used directly.
+
+**Merge multiple JSON or YAML files:**
 
 ```bash
 openapi-docs \
---files <input-json-files...> \
---out <output-json-file>
+--files <input-files...>
 ```
 
 **Example:**
 
 ```bash
 openapi-docs \
--f ./testfiles/test.json ./testfiles/test2.json \
--o ./testfiles/out.json
+-f ./testfiles/test.json ./testfiles/test2.json ./testfiles/test3.yml
 ```

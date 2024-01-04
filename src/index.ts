@@ -5,14 +5,14 @@ import chalk from 'chalk';
 import { OpenApiDocsService } from './services/OpenApiDocsService.js';
 
 (() => {
-  console.log(chalk.green.bold('JSON merger'));
+  console.log(chalk.green.bold('OpenAPI Docs'));
   const program = new Command();
 
-  program.name('json-merge').usage('command [options]');
+  program.name('openapi-docs').usage('command [options]');
 
   program
     .command('merge', { isDefault: true })
-    .option('-f, --files <files...>', 'input JSON files')
+    .option('-f, --files <files...>', 'input files')
     .action((options) => {
       if (!options.files || options.files.length < 1) {
         console.error(chalk.yellow.bold('\nMissing options: input files\n'));

@@ -1,27 +1,48 @@
 #!/usr/bin/env -S node
 
-import { Command } from 'commander';
-import chalk from 'chalk';
-import { OpenApiDocsService } from './services/OpenApiDocsService.js';
+import { parseArgs, styleText } from 'node:util';
+import {
+  exitWithError,
+  readDocuments,
+  writeHtml,
+  writeSpec,
+} from './services/OpenApiDocsService.js';
 
-(() => {
-  console.log(chalk.green.bold('OpenAPI Docs'));
-  const program = new Command();
+const USAGE = 'Usage: openapi-docs -f <files...>';
 
-  program.name('openapi-docs').usage('command [options]');
-
-  program
-    .command('merge', { isDefault: true })
-    .option('-f, --files <files...>', 'input files')
-    .action((options) => {
-      if (!options.files || options.files.length < 1) {
-        console.error(chalk.yellow.bold('\nMissing options: input files\n'));
-        program.help();
-      }
-
-      OpenApiDocsService.combineFiles(options.files);
-      OpenApiDocsService.createHtmlFile(options.files);
+const parseCommandLine = () => {
+  try {
+    return parseArgs({
+      options: {
+        files: { type: 'string', short: 'f', multiple: true },
+        help: { type: 'boolean', short: 'h' },
+      },
+      allowPositionals: true,
     });
+  } catch (error) {
+    return exitWithError(`${(error as Error).message}\n\n${USAGE}`);
+  }
+};
 
-  program.parse(process.argv);
-})();
+console.log(styleText(['green', 'bold'], 'OpenAPI Docs'));
+
+const { values, positionals } = parseCommandLine();
+
+if (values.help) {
+  console.log(USAGE);
+  process.exit(0);
+}
+
+// `-f a b c` puts `b` and `c` in positionals. `merge` was the old default command name.
+const files = [...(values.files ?? []), ...positionals].filter(
+  (file) => file !== 'merge',
+);
+
+if (files.length < 1) {
+  exitWithError(`Missing options: input files\n\n${USAGE}`);
+}
+
+const document = readDocuments(files);
+
+writeSpec(document);
+writeHtml(document);
